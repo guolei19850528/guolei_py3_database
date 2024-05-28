@@ -92,7 +92,7 @@ state, list[{}] = gl_sqlite3.fetchone(connect=connect, query="sql", args={})
 gl_sqlite3.close_connect(connect=connect)
 
 ```
-### strictredis
+### strictredis example
 
 ```python
 from guolei_py3_database import strictredis as gl_strictredis

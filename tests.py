@@ -28,7 +28,7 @@ class StrictredisCase(unittest.TestCase):
     def test_connect(self):
         self.assertTrue(
             True,
-            "connect not a sqlite3 instance"
+            "connect not a strictredis instance"
         )
 
 
