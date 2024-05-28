@@ -8,7 +8,7 @@
 
 ## software architecture
 
-~python 3.11
+~python 3.*
 
 ## installation tutorial
 
@@ -17,182 +17,98 @@ pip install guolei_py3_database
 ```
 
 ## catalog description
-### pymysql
+### pymysql example
 
 ```python
 # import module
-from guolei_py3_database import pymysql
+from guolei_py3_database import pymysql as gl_pymysql
 
+# connect config
 cfg = {
-    'host': '<HOST>',
-    'port': '<PORT>',
-    'user': '<USER>',
-    'password': '<PASSWORD>',
-    'database': '<DATABASE>',
+    "host": "<HOST>",
+    "port": "<PORT>",
+    "user": "<USER>",
+    "password": "<PASSWORD>",
+    "database": "<DATABASE>",
 }
-connect = pymysql.get_connect(**cfg)
 
+# open connect
+connect = gl_pymysql.open_connect(**cfg)
 
-@pymysql.call_get_connect()
-def _call_get_connect():
-    return {
-        'host': '<HOST>',
-        'port': '<PORT>',
-        'user': '<USER>',
-        'password': '<PASSWORD>',
-        'database': '<DATABASE>',
-    }
+# execute
+state, rowcount, lastrowid = gl_pymysql.execute(connect=connect, query="sql", args={})
 
+# executemany
+state, rowcount = gl_pymysql.executemany(connect=connect, query="sql", args={})
 
-connect = _call_get_connect()
+# execute_transaction
+state, rowcount = gl_pymysql.execute_transaction(connect=connect, query="sql", args={})
 
+# fetchone
+state, dict = gl_pymysql.fetchone(connect=connect, query="sql", args={})
 
-@pymysql.call_execute(connect=connect, is_closed_connect=False)
-def _call_execute():
-    query = "your sql"
-    args = "your sql parameters"
-    return query, args
+# fetchone
+state, list[{}] = gl_pymysql.fetchone(connect=connect, query="sql", args={})
 
+# close connect
+gl_pymysql.close_connect(connect=connect)
 
-print(_call_execute())
-
-
-@pymysql.call_execute_many(connect=connect, is_closed_connect=False)
-def _call_execute_many():
-    query = "your sql"
-    args = "your sql parameters"
-    return query, args
-
-
-print(_call_execute_many())
-
-
-@pymysql.call_execute_fetch_one(connect=connect, is_closed_connect=False)
-def _call_execute_fetch_one():
-    query = "your sql"
-    args = "your sql parameters"
-    return query, args
-
-
-print(_call_execute_fetch_one())
-
-
-@pymysql.call_execute_fetch_all(connect=connect, is_closed_connect=False)
-def _call_execute_fetch_all():
-    query = "your sql"
-    args = "your sql parameters"
-    return query, args
-
-
-print(_call_execute_fetch_all())
-
-
-@pymysql.call_execute_transaction(connect=connect, is_closed_connect=False)
-def _call_execute_transaction():
-    query = "your sql"
-    args = "your sql parameters"
-    # more sql and args
-    # ...
-    return [(query, args)]
-
-
-print(_call_execute_transaction())
 
 ```
 
-### sqlite3
+### sqlite3 example
 ```python
-from guolei_py3_database import sqlite3
+# import module
+from guolei_py3_database import pymysql as gl_sqlite3
 
+# connect config
 cfg = {
-    # sqlite3 parameters
+    "host": "<HOST>",
+    "port": "<PORT>",
+    "user": "<USER>",
+    "password": "<PASSWORD>",
+    "database": "<DATABASE>",
 }
-connect = sqlite3.get_connect(**cfg)
 
+# open connect
+connect = gl_sqlite3.open_connect(**cfg)
 
-@sqlite3.call_get_connect()
-def _call_get_connect():
-    return {
-        # sqlite3 parameters
-    }
+# execute
+state, rowcount, lastrowid = gl_sqlite3.execute(connect=connect, query="sql", args={})
 
+# executemany
+state, rowcount = gl_sqlite3.executemany(connect=connect, query="sql", args={})
 
-connect = _call_get_connect()
+# execute_transaction
+state, rowcount = gl_sqlite3.execute_transaction(connect=connect, query="sql", args={})
 
+# fetchone
+state, dict = gl_sqlite3.fetchone(connect=connect, query="sql", args={})
 
-@sqlite3.call_execute(connect=connect, is_closed_connect=False)
-def _call_execute():
-    query = "your sql"
-    args = "your sql parameters"
-    return query, args
+# fetchone
+state, list[{}] = gl_sqlite3.fetchone(connect=connect, query="sql", args={})
 
-
-print(_call_execute())
-
-
-@sqlite3.call_execute_many(connect=connect, is_closed_connect=False)
-def _call_execute_many():
-    query = "your sql"
-    args = "your sql parameters"
-    return query, args
-
-
-print(_call_execute_many())
-
-
-@sqlite3.call_execute_fetch_one(connect=connect, is_closed_connect=False)
-def _call_execute_fetch_one():
-    query = "your sql"
-    args = "your sql parameters"
-    return query, args
-
-
-print(_call_execute_fetch_one())
-
-
-@sqlite3.call_execute_fetch_all(connect=connect, is_closed_connect=False)
-def _call_execute_fetch_all():
-    query = "your sql"
-    args = "your sql parameters"
-    return query, args
-
-
-print(_call_execute_fetch_all())
-
-
-@sqlite3.call_execute_transaction(connect=connect, is_closed_connect=False)
-def _call_execute_transaction():
-    query = "your sql"
-    args = "your sql parameters"
-    # more sql and args
-    # ...
-    return [(query, args)]
-
-
-print(_call_execute_transaction())
+# close connect
+gl_sqlite3.close_connect(connect=connect)
 
 ```
 ### strictredis
 
 ```python
-from guolei_py3_database import strictredis
+from guolei_py3_database import strictredis as gl_strictredis
 
+# connect config
 cfg = {
-    # StrictRedis parameters
+    # StrictRedis 
 }
-connect = strictredis.get_connect()
+# open connect
+connect = gl_strictredis.open_connect(**cfg)
 
+# execute
+gl_strictredis.execute(connect=connect, method="keys", pattern="*")
 
-@strictredis.call_get_connect()
-def _call_get_connect():
-    return {
-        # StrictRedis parameters
-    }
-
-
-@strictredis.call_execute(connect=connect, attr="get")
-def _call_execute():
-    return "attr parameters"
+# close connect
+gl_strictredis.close_connect(connect=connect)
 ```
 
 
