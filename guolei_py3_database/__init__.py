@@ -135,11 +135,11 @@ class Paginator(object):
 
     @property
     def items(self):
-        return self.items
+        return self._items
 
     @items.setter
     def items(self, value=[]):
-        self.items = value
+        self._items = value
 
     def to_dict(self):
         return {
