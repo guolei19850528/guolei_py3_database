@@ -1,0 +1,1 @@
+rm -rf ./dist && rm -rf ./build && rm -rf jtwy_py3_library.egg-info && python setup.py sdist && twine upload dist/*

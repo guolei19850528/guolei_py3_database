@@ -43,9 +43,9 @@ class DuckdbTestCase(unittest.TestCase):
             install_extension_list=["spatial"],
             load_extension_list=["spatial"]
         )
-        fp=os.path.join(os.getcwd(),"runtime","金泰甄选_订单统计报表_20240606.xlsx")
+        fp=os.path.join(os.getcwd(),"runtime","未注册业主_20240501.xlsx")
         df1=connect.execute(f"""
-        select * from st_read('{fp}')
+        select * from st_read('{fp}',open_options = ['HEADERS=FORCE'])
         """).fetch_df()
         print(df1)
         self.assertTrue(
