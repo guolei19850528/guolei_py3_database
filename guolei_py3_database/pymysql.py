@@ -11,8 +11,8 @@ from pymysql.cursors import DictCursor
 def open_connect(*args, **kwargs) -> Connect:
     """
     open Connect
-    :param args:
-    :param kwargs:
+    :param args: Connect(*args, **kwargs)
+    :param kwargs: Connect(*args, **kwargs)
     :return: Connect
     """
     if isinstance(kwargs, dict) and not "cursorclass" in kwargs.keys():
