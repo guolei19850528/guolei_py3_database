@@ -22,7 +22,7 @@ def open_connect(
         connect.install_extension(extension)
     for extension in load_extension_list:
         connect.load_extension(extension)
-    return duckdb.connect(**connect_kwargs)
+    return connect
 
 
 def close_connect(connect: DuckDBPyConnection = None) -> bool:
@@ -45,4 +45,6 @@ def execute(connection: DuckDBPyConnection, *args, **kwargs) -> DuckDBPyConnecti
     :param kwargs: connection.execute(*args, **kwargs)
     :return: DuckDBPyConnection
     """
+    if not isinstance(connection, DuckDBPyConnection):
+        raise ValueError('connection must be DuckDBPyConnection')
     return connection.execute(*args, **kwargs)

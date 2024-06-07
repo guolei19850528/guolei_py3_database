@@ -1,3 +1,4 @@
+import os.path
 import types
 import unittest
 
@@ -28,20 +29,29 @@ class Sqlite3Case(unittest.TestCase):
 
 class StrictredisCase(unittest.TestCase):
     def test_connect(self):
-        connect:duckdb=guolei_py3_database.duckdb.open_connect()
+        connect: duckdb = guolei_py3_database.duckdb.open_connect()
 
         self.assertTrue(
             True,
             "connect not a strictredis instance"
         )
+
 
 class DuckdbTestCase(unittest.TestCase):
     def test_connect(self):
+        connect: duckdb.DuckDBPyConnection = guolei_py3_database.duckdb.open_connect(
+            install_extension_list=["spatial"],
+            load_extension_list=["spatial"]
+        )
+        fp=os.path.join(os.getcwd(),"runtime","金泰甄选_订单统计报表_20240606.xlsx")
+        df1=connect.execute(f"""
+        select * from st_read('{fp}')
+        """).fetch_df()
+        print(df1)
         self.assertTrue(
             True,
             "connect not a strictredis instance"
         )
-
 
 
 if __name__ == '__main__':
