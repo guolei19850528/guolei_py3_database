@@ -137,7 +137,7 @@ class Paginator(object):
         return self._results
 
     @results.setter
-    def items(self, value=[]):
+    def results(self, value=[]):
         self._results = value
 
     def to_dict(self):
