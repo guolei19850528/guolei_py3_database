@@ -40,7 +40,7 @@ def execute(connect: Connect = None, *args, **kwargs) -> tuple:
         try:
             cursor.execute(*args, **kwargs)
             connect.commit()
-            return True, cursor.rowcount, cursor.lastrowid
+            return cursor.rowcount, cursor.lastrowid
         except Exception as error:
             raise error
         finally:
@@ -55,7 +55,7 @@ def executemany(connect: Connect = None, *args, **kwargs) -> tuple:
         try:
             cursor.executemany(*args, **kwargs)
             connect.commit()
-            return True, cursor.rowcount
+            return cursor.rowcount
         except Exception as error:
             raise error
         finally:
@@ -77,7 +77,7 @@ def execute_transaction(connect: Connect = None, queries: list = []) -> tuple:
                 if isinstance(query, str):
                     cursor.execute(query)
             connect.commit()
-            return True, cursor.rowcount
+            return cursor.rowcount
         except Exception as error:
             connect.rollback()
             raise error
@@ -92,7 +92,7 @@ def fetchone(connect: Connect = None, *args, **kwargs) -> tuple:
     with connect.cursor() as cursor:
         try:
             cursor.execute(*args, **kwargs)
-            return True, cursor.fetchone()
+            return  cursor.fetchone()
         except Exception as error:
             raise error
         finally:
@@ -106,7 +106,7 @@ def fetchall(connect: Connect = None, *args, **kwargs) -> tuple:
     with connect.cursor() as cursor:
         try:
             cursor.execute(*args, **kwargs)
-            return True, cursor.fetchall()
+            return cursor.fetchall()
         except Exception as error:
             raise error
         finally:

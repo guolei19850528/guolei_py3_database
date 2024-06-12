@@ -122,9 +122,8 @@ class Paginator(object):
         if int(self.pages) <= int(self.split):
             self._currents = [i + 1 for i in range(int(self.pages))]
         else:
-            if int(self.current) == int(self.previous_split):
-                self._currents = [i + 1 for i in
-                                  range((int(self.previous_split) - int(self.split)), int(self.previous_split))]
+            if int(self.current) < int(self.split):
+                self._currents = [i + 1 for i in range(int(self.split))]
             else:
                 if int(self.previous_split) == int(self.next_split):
                     self._currents = [i + 1 for i in
