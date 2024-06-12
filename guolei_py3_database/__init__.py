@@ -18,7 +18,7 @@ class Paginator(object):
         self._previous_split = 0
         self._next_split = split
         self._currents = []
-        self._items = []
+        self._results = []
 
     @property
     def current(self):
@@ -133,12 +133,12 @@ class Paginator(object):
         return self._currents
 
     @property
-    def items(self):
-        return self._items
+    def results(self):
+        return self._results
 
-    @items.setter
+    @results.setter
     def items(self, value=[]):
-        self._items = value
+        self._results = value
 
     def to_dict(self):
         return {
@@ -155,7 +155,7 @@ class Paginator(object):
             "previous_split": self.previous_split,
             "next_split": self.next_split,
             "currents": self.currents,
-            "items": self.items,
+            "results": self.results,
         }
 
     def to_json(self):
