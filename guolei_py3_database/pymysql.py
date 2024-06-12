@@ -48,7 +48,7 @@ def execute(connect: Connect = None, *args, **kwargs) -> tuple:
                 cursor.close()
 
 
-def executemany(connect: Connect = None, *args, **kwargs) -> tuple:
+def executemany(connect: Connect = None, *args, **kwargs) -> int:
     if not isinstance(connect, Connect) or not connect.open:
         raise ValueError("connect is Connect and connect must be open")
     with connect.cursor() as cursor:
@@ -63,7 +63,7 @@ def executemany(connect: Connect = None, *args, **kwargs) -> tuple:
                 cursor.close()
 
 
-def execute_transaction(connect: Connect = None, queries: list = []) -> tuple:
+def executetransaction(connect: Connect = None, queries: list = []) -> bool:
     if not isinstance(connect, Connect) or not connect.open:
         raise ValueError("connect is Connect and connect must be open")
     with connect.cursor() as cursor:
@@ -77,7 +77,7 @@ def execute_transaction(connect: Connect = None, queries: list = []) -> tuple:
                 if isinstance(query, str):
                     cursor.execute(query)
             connect.commit()
-            return cursor.rowcount
+            return True
         except Exception as error:
             connect.rollback()
             raise error
@@ -86,13 +86,13 @@ def execute_transaction(connect: Connect = None, queries: list = []) -> tuple:
                 cursor.close()
 
 
-def fetchone(connect: Connect = None, *args, **kwargs) -> tuple:
+def fetchone(connect: Connect = None, *args, **kwargs):
     if not isinstance(connect, Connect) or not connect.open:
         raise ValueError("connect is Connect and connect must be open")
     with connect.cursor() as cursor:
         try:
             cursor.execute(*args, **kwargs)
-            return  cursor.fetchone()
+            return cursor.fetchone()
         except Exception as error:
             raise error
         finally:
@@ -100,7 +100,7 @@ def fetchone(connect: Connect = None, *args, **kwargs) -> tuple:
                 cursor.close()
 
 
-def fetchall(connect: Connect = None, *args, **kwargs) -> tuple:
+def fetchall(connect: Connect = None, *args, **kwargs):
     if not isinstance(connect, Connect) or not connect.open:
         raise ValueError("connect is Connect and connect must be open")
     with connect.cursor() as cursor:

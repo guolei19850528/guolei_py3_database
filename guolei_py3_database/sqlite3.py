@@ -48,7 +48,7 @@ def execute(connect: sqlite3.Connection = None, sql: str = "", parameters=()) ->
             cursor.close()
 
 
-def executemany(connect: sqlite3.Connection = None, sql: str = "", seq_of_parameters=None) -> tuple:
+def executemany(connect: sqlite3.Connection = None, sql: str = "", seq_of_parameters=None) -> int:
     if not isinstance(connect, sqlite3.Connection):
         raise ValueError("connect must be sqlite3.Connection")
     if not isinstance(sql, str) or not len(sql):
@@ -65,7 +65,7 @@ def executemany(connect: sqlite3.Connection = None, sql: str = "", seq_of_parame
             cursor.close()
 
 
-def executescript(connect: sqlite3.Connection = None, sql_script: str = "") -> tuple:
+def executescript(connect: sqlite3.Connection = None, sql_script: str = "") -> int:
     if not isinstance(connect, sqlite3.Connection):
         raise ValueError("connect must be sqlite3.Connection")
     if not isinstance(sql_script, str) or not len(sql_script):
@@ -83,7 +83,7 @@ def executescript(connect: sqlite3.Connection = None, sql_script: str = "") -> t
             cursor.close()
 
 
-def fetchone(connect: sqlite3.Connection = None, sql: str = "", parameters=()) -> tuple:
+def fetchone(connect: sqlite3.Connection = None, sql: str = "", parameters=()):
     if not isinstance(connect, sqlite3.Connection):
         raise ValueError("connect must be sqlite3.Connection")
     if not isinstance(sql, str) or not len(sql):
@@ -101,7 +101,7 @@ def fetchone(connect: sqlite3.Connection = None, sql: str = "", parameters=()) -
             cursor.close()
 
 
-def fetchall(connect: sqlite3.Connection = None, sql: str = "", parameters=()) -> tuple:
+def fetchall(connect: sqlite3.Connection = None, sql: str = "", parameters=()):
     if not isinstance(connect, sqlite3.Connection):
         raise ValueError("connect must be sqlite3.Connection")
     if not isinstance(sql, str) or not len(sql):
