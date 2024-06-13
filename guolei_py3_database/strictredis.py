@@ -95,7 +95,7 @@ class Database(object):
         close redis.StrictRedis  connect
         :return:
         """
-        if isinstance(self._connect, redis.StrictRedis):
-            self._connect.close()
+        if isinstance(self.connect, redis.StrictRedis):
+            self.connect.close()
             return True
         return False

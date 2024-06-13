@@ -141,7 +141,7 @@ class Database(object):
         close open duckdb.DuckDBPyConnection
         :return:
         """
-        if isinstance(self._connect, DuckDBPyConnection):
-            self._connect.close()
+        if isinstance(self.connect, DuckDBPyConnection):
+            self.connect.close()
             return True
         return False

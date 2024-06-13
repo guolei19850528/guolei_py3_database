@@ -103,8 +103,8 @@ class Database(object):
         close pymysql.Connect
         :return:
         """
-        if isinstance(self._connect, Connect) and self._connect.open:
-            self._connect.close()
+        if isinstance(self.connect, Connect) and self.connect.open:
+            self.connect.close()
             return True
         return False
 
@@ -114,13 +114,13 @@ class Database(object):
         :param queries:
         :return:
         """
-        if not isinstance(self._connect, Connect) or not self._connect.open:
+        if not isinstance(self.connect, Connect) or not self.connect.open:
             raise ValueError("connect is Connect and connect must be open")
         if not isinstance(queries, list) or not len(queries):
             raise ValueError(f"queries:{queries} must be list and not empty")
-        with self._connect.cursor() as cursor:
+        with self.connect.cursor() as cursor:
             try:
-                self._connect.begin()
+                self.connect.begin()
                 for query in queries:
                     if isinstance(query, tuple):
                         cursor.execute(*query)
@@ -128,10 +128,10 @@ class Database(object):
                         cursor.execute(**query)
                     if isinstance(query, str):
                         cursor.execute(query)
-                self._connect.commit()
+                self.connect.commit()
                 return True
             except Exception as error:
-                self._connect.rollback()
+                self.connect.rollback()
                 raise error
             finally:
                 cursor.close()
@@ -143,17 +143,17 @@ class Database(object):
         :param args:
         :return:
         """
-        if not isinstance(self._connect, Connect) or not self._connect.open:
+        if not isinstance(self.connect, Connect) or not self.connect.open:
             raise ValueError("connect is Connect and connect must be open")
         if not isinstance(query, str) or not len(query):
             raise ValueError(f"query:{query} must be string and not empty")
-        with self._connect.cursor() as cursor:
+        with self.connect.cursor() as cursor:
             try:
                 cursor.executemany(query=query, args=args)
-                self._connect.commit()
+                self.connect.commit()
                 return cursor.rowcount
             except Exception as error:
-                self._connect.rollback()
+                self.connect.rollback()
                 raise error
             finally:
                 cursor.close()
@@ -166,14 +166,14 @@ class Database(object):
         :param cursor_func_or_prop: return cursor func or prop
         :return:
         """
-        if not isinstance(self._connect, Connect) or not self._connect.open:
+        if not isinstance(self.connect, Connect) or not self.connect.open:
             raise ValueError("connect is Connect and connect must be open")
         if not isinstance(query, str) or not len(query):
             raise ValueError(f"query:{query} must be string and not empty")
-        with self._connect.cursor() as cursor:
+        with self.connect.cursor() as cursor:
             try:
                 cursor.execute(query=query, args=args)
-                self._connect.commit()
+                self.connect.commit()
                 if isinstance(cursor_func_or_prop, str) and len(cursor_func_or_prop):
                     if cursor_func_or_prop == CURSOR_FUNC_FETCHONE:
                         return cursor.fetchone()
@@ -187,7 +187,7 @@ class Database(object):
                         return cursor.description
                 return cursor.rowcount
             except Exception as error:
-                self._connect.rollback()
+                self.connect.rollback()
                 raise error
             finally:
                 cursor.close()

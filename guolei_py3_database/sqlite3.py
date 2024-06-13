@@ -100,8 +100,8 @@ class Database(object):
         close sqlite3 connect
         :return:
         """
-        if isinstance(self._connect, sqlite3.Connection):
-            self._connect.close()
+        if isinstance(self.connect, sqlite3.Connection):
+            self.connect.close()
             return True
         return False
 
@@ -111,17 +111,17 @@ class Database(object):
         :param sql_script:
         :return:
         """
-        if not isinstance(self._connect, sqlite3.Connection):
-            raise ValueError(f"connect:{self._connect} must be sqlite3.Connection")
+        if not isinstance(self.connect, sqlite3.Connection):
+            raise ValueError(f"connect:{self.connect} must be sqlite3.Connection")
         if not isinstance(sql_script, str) or not len(sql_script):
             raise ValueError(f"sql:{sql_script} must be string and not empty")
         try:
-            cursor = self._connect.cursor()
+            cursor = self.connect.cursor()
             cursor.executescript(sql_script)
-            self._connect.commit()
+            self.connect.commit()
             return cursor.rowcount
         except Exception as error:
-            self._connect.rollback()
+            self.connect.rollback()
             raise error
         finally:
             if isinstance(cursor, sqlite3.Cursor):
@@ -134,14 +134,14 @@ class Database(object):
         :param seq_of_parameters:
         :return:
         """
-        if not isinstance(self._connect, sqlite3.Connection):
-            raise ValueError(f"connect:{self._connect} must be sqlite3.Connection")
+        if not isinstance(self.connect, sqlite3.Connection):
+            raise ValueError(f"connect:{self.connect} must be sqlite3.Connection")
         if not isinstance(sql, str) or not len(sql):
             raise ValueError(f"sql:{sql} must be string and not empty")
         if not seq_of_parameters:
             seq_of_parameters = ()
         try:
-            cursor = self._connect.cursor()
+            cursor = self.connect.cursor()
             cursor.executemany(sql, seq_of_parameters)
             self._connect.commit()
             return cursor.rowcount
@@ -160,16 +160,16 @@ class Database(object):
         :param cursor_func_or_prop: return cursor func or prop
         :return:
         """
-        if not isinstance(self._connect, sqlite3.Connection):
-            raise ValueError(f"connect:{self._connect} must be sqlite3.Connection")
+        if not isinstance(self.connect, sqlite3.Connection):
+            raise ValueError(f"connect:{self.connect} must be sqlite3.Connection")
         if not isinstance(sql, str) or not len(sql):
             raise ValueError(f"sql:{sql} must be string and not empty")
         if not parameters:
             parameters = ()
         try:
-            cursor = self._connect.cursor()
+            cursor = self.connect.cursor()
             cursor.execute(sql, parameters)
-            self._connect.commit()
+            self.connect.commit()
             if isinstance(cursor_func_or_prop, str) and len(cursor_func_or_prop):
                 if cursor_func_or_prop == CURSOR_FUNC_FETCHONE:
                     return Dict(dict(cursor.fetchone()))
@@ -183,7 +183,7 @@ class Database(object):
                     return cursor.description
             return cursor.rowcount
         except Exception as error:
-            self._connect.rollback()
+            self.connect.rollback()
             raise error
         finally:
             if isinstance(cursor, sqlite3.Cursor):

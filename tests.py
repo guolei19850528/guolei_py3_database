@@ -14,6 +14,16 @@ from guolei_py3_database import strictredis as gl_strictredis
 
 class PymysqlTestCase(unittest.TestCase):
     def test_connect(self):
+        database = gl_pymysql.Database(connect_kwargs={
+            "host": "localhost",
+            "port": 3306,
+            "user": "root",
+            "passwd": "123456",
+            "db": "guolei_dev_db",
+        })
+        database.open_connect()
+        print(database.fetchall("select * from test_0001", args={"name": "test"}))
+        database.close_connect()
         self.assertTrue(
             True,
             "connect not a pymysql instance"
@@ -22,6 +32,19 @@ class PymysqlTestCase(unittest.TestCase):
 
 class Sqlite3TestCase(unittest.TestCase):
     def test_connect(self):
+        sqlite3_db_fp = os.path.join(
+            os.path.dirname(__file__),
+            *[
+                "runtime",
+                "pos.db",
+            ]
+        )
+        database = gl_sqlite3.Database(connect_kwargs={
+            "database": sqlite3_db_fp,
+        })
+        database.open_connect()
+        print((database.fetchall("select * from goods limit 100")))
+        database.close_connect()
         self.assertTrue(
             True,
             "connect not a sqlite3 instance"
