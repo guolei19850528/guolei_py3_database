@@ -115,7 +115,7 @@ class Database(object):
         :return:
         """
         if not isinstance(self.connect, Connect) or not self.connect.open:
-            raise ValueError("connect is Connect and connect must be open")
+            raise ValueError(f"connect:{self.connect} is Connect and connect must be open")
         if not isinstance(queries, list) or not len(queries):
             raise ValueError(f"queries:{queries} must be list and not empty")
         with self.connect.cursor() as cursor:
@@ -144,7 +144,7 @@ class Database(object):
         :return:
         """
         if not isinstance(self.connect, Connect) or not self.connect.open:
-            raise ValueError("connect is Connect and connect must be open")
+            raise ValueError(f"connect:{self.connect} is Connect and connect must be open")
         if not isinstance(query, str) or not len(query):
             raise ValueError(f"query:{query} must be string and not empty")
         with self.connect.cursor() as cursor:
@@ -167,7 +167,7 @@ class Database(object):
         :return:
         """
         if not isinstance(self.connect, Connect) or not self.connect.open:
-            raise ValueError("connect is Connect and connect must be open")
+            raise ValueError(f"connect:{self.connect} is Connect and connect must be open")
         if not isinstance(query, str) or not len(query):
             raise ValueError(f"query:{query} must be string and not empty")
         with self.connect.cursor() as cursor:
