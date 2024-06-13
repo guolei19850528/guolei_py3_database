@@ -23,35 +23,20 @@ pip install guolei_py3_database
 # import module
 from guolei_py3_database import pymysql as gl_pymysql
 
-# connect config
-cfg = {
-    "host": "<HOST>",
-    "port": "<PORT>",
-    "user": "<USER>",
-    "password": "<PASSWORD>",
-    "database": "<DATABASE>",
-}
+database=gl_pymysql.Database(connect_args=(), connect_kwargs={})
 
-# open connect
-connect = gl_pymysql.open_connect(**cfg)
+# must be call
+database.open_connect()
 
-# execute
-state, rowcount, lastrowid = gl_pymysql.execute(connect=connect, query="sql", args={})
+database.execute()
+database.executemany()
+database.transaction()
+database.rowcount()
+database.lastrowid()
+database.fetchone()
+database.fetchall()
 
-# executemany
-state, rowcount = gl_pymysql.executemany(connect=connect, query="sql", args={})
-
-# execute_transaction
-state, rowcount = gl_pymysql.execute_transaction(connect=connect, query="sql", args={})
-
-# fetchone
-state, dict = gl_pymysql.fetchone(connect=connect, query="sql", args={})
-
-# fetchone
-state, list[{}] = gl_pymysql.fetchone(connect=connect, query="sql", args={})
-
-# close connect
-gl_pymysql.close_connect(connect=connect)
+database.close_connect()
 
 
 ```

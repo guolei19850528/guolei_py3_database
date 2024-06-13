@@ -1,4 +1,5 @@
 import os.path
+import re
 import types
 import unittest
 
@@ -11,7 +12,7 @@ from guolei_py3_database import sqlite3 as gl_sqlite3
 from guolei_py3_database import strictredis as gl_strictredis
 
 
-class PymysqlCase(unittest.TestCase):
+class PymysqlTestCase(unittest.TestCase):
     def test_connect(self):
         self.assertTrue(
             True,
@@ -19,7 +20,7 @@ class PymysqlCase(unittest.TestCase):
         )
 
 
-class Sqlite3Case(unittest.TestCase):
+class Sqlite3TestCase(unittest.TestCase):
     def test_connect(self):
         self.assertTrue(
             True,
@@ -27,10 +28,8 @@ class Sqlite3Case(unittest.TestCase):
         )
 
 
-class StrictredisCase(unittest.TestCase):
+class StrictRedisTestCase(unittest.TestCase):
     def test_connect(self):
-        connect: duckdb = guolei_py3_database.duckdb.open_connect()
-
         self.assertTrue(
             True,
             "connect not a strictredis instance"
@@ -39,15 +38,6 @@ class StrictredisCase(unittest.TestCase):
 
 class DuckdbTestCase(unittest.TestCase):
     def test_connect(self):
-        connect: duckdb.DuckDBPyConnection = guolei_py3_database.duckdb.open_connect(
-            install_extension_list=["spatial"],
-            load_extension_list=["spatial"]
-        )
-        fp=os.path.join(os.getcwd(),"runtime","未注册业主_20240501.xlsx")
-        df1=connect.execute(f"""
-        select * from st_read('{fp}',open_options = ['HEADERS=FORCE'])
-        """).fetch_df()
-        print(df1)
         self.assertTrue(
             True,
             "connect not a strictredis instance"
