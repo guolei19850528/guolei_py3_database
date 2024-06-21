@@ -1,0 +1,9 @@
+PyMySQL
+redis
+duckdb
+diskcache
+addict
+retrying
+pydantic
+setuptools
+wheel
