@@ -12,9 +12,7 @@ Github：https://github.com/guolei19850528/guolei_py3_database
 =================================================
 """
 
-import functools
-import types
-from typing import Union
+from typing import Iterable
 
 import redis
 from addict import Dict
@@ -27,8 +25,8 @@ class Database(object):
 
     def __init__(
             self,
-            connect_args: Union[tuple, list] = (),
-            connect_kwargs: Union[dict, Dict] = Dict({}),
+            connect_args: Iterable = (),
+            connect_kwargs: dict = Dict({}),
     ):
         """
         Database Construct function
@@ -40,7 +38,7 @@ class Database(object):
         self._connect: redis.StrictRedis = None
 
     @property
-    def connect_args(self) -> Union[tuple, list]:
+    def connect_args(self) -> Iterable:
         """
         redis.StrictRedis connect_args
         :return:
@@ -48,7 +46,7 @@ class Database(object):
         return self._connect_args
 
     @connect_args.setter
-    def connect_args(self, value: Union[tuple, list]):
+    def connect_args(self, value: Iterable):
         """
         redis.StrictRedis connect_args
         :param value:
@@ -57,7 +55,7 @@ class Database(object):
         self._connect_args = value
 
     @property
-    def connect_kwargs(self) -> Union[dict, Dict]:
+    def connect_kwargs(self) -> dict:
         """
         redis.StrictRedis connect_kwargs
         :return:
@@ -65,7 +63,7 @@ class Database(object):
         return self._connect_kwargs
 
     @connect_kwargs.setter
-    def connect_kwargs(self, value: Union[dict, Dict]):
+    def connect_kwargs(self, value: dict):
         """
         redis.StrictRedis connect_kwargs
         :param value:

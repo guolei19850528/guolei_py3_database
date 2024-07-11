@@ -10,13 +10,16 @@ Email：[174000902@qq.com]
 Github：https://github.com/guolei19850528/guolei_py3_database
 =================================================
 """
-from typing import Union
+from typing import Iterable
 
 import pymysql
 from addict import Dict
 from pymysql import Connect
 from pymysql.cursors import DictCursor
 
+"""
+cursor function property constant
+"""
 CURSOR_FUNC_FETCHONE = "CURSOR_FUNC_FETCHONE"
 CURSOR_FUNC_FETCHALL = "CURSOR_FUNC_FETCHALL"
 CURSOR_PROP_LASTROWID = "CURSOR_PROP_LASTROWID"
@@ -27,24 +30,53 @@ CURSOR_PROP_DESCRIPTION = "CURSOR_PROP_DESCRIPTION"
 class Database(object):
     """
     Database Class
+
+    Usage::
+
+    >>> import guolei_py3_database.pymysql.Database
+    >>> db = guolei_py3_database.pymysql.Database((),{})
+    >>> # must call this function
+    >>> db.open_connect()
+    >>> db.transaction()
+    >>> db.execute()
+    >>> db.executemany()
+    >>> db.rowcount()
+    >>> db.lastrowid()
+    >>> db.description()
+    >>> db.fetchone()
+    >>> db.fetchall()
+    >>> # must call this function
+    >>> db.close_connect()
     """
 
     def __init__(
             self,
-            connect_args: Union[tuple, list] = (),
-            connect_kwargs: Union[dict, Dict] = Dict({}),
+            connect_args: Iterable = (),
+            connect_kwargs: dict = Dict({}),
     ):
         """
         Database construct function
         :param connect_args: pymysql.Connect args
         :param connect_kwargs:pymysql.Connect kwargs
+
+            >>> import guolei_py3_database.pymysql.Database
+            >>> db = guolei_py3_database.pymysql.Database((),{})
+            >>> db.open_connect()
+            >>> db.execute()
+            >>> db.executemany()
+            >>> db.rowcount()
+            >>> db.lastrowid()
+            >>> db.description()
+            >>> db.fetchone()
+            >>> db.fetchall()
+            >>> db.close_connect()
         """
         self._connect_args = connect_args
         self._connect_kwargs = connect_kwargs
         self._connect: pymysql.Connect = None
 
     @property
-    def connect_args(self) -> Union[tuple, list]:
+    def connect_args(self) -> Iterable:
         """
         pymysql.Connect args
         :return:
@@ -52,7 +84,7 @@ class Database(object):
         return self._connect_args
 
     @connect_args.setter
-    def connect_args(self, value: Union[tuple, list]):
+    def connect_args(self, value: Iterable):
         """
         pymysql.Connect args
         :param value:
@@ -61,7 +93,7 @@ class Database(object):
         self._connect_args = value
 
     @property
-    def connect_kwargs(self) -> Union[dict, Dict]:
+    def connect_kwargs(self) -> dict:
         """
         pymysql.Connect kwargs
         :return:
@@ -69,7 +101,7 @@ class Database(object):
         return self._connect_kwargs
 
     @connect_kwargs.setter
-    def connect_kwargs(self, value: Union[dict, Dict]):
+    def connect_kwargs(self, value: dict):
         """
         pymysql.Connect kwargs
         :param value:

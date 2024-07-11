@@ -10,7 +10,7 @@ Email：[174000902@qq.com]
 Github：https://github.com/guolei19850528/guolei_py3_database
 =================================================
 """
-from typing import Union
+from typing import Iterable
 
 from addict import Dict
 from duckdb import duckdb, DuckDBPyConnection
@@ -23,10 +23,10 @@ class Database(object):
 
     def __init__(
             self,
-            connect_args: Union[tuple, list] = (),
-            connect_kwargs: Union[dict, Dict] = Dict({}),
-            install_extension_list: Union[list, tuple] = [],
-            load_extension_list: Union[list, tuple] = [],
+            connect_args: Iterable = (),
+            connect_kwargs: dict = Dict({}),
+            install_extension_list: Iterable = [],
+            load_extension_list: Iterable = [],
     ):
         """
         Database construct function
@@ -42,7 +42,7 @@ class Database(object):
         self._connect: DuckDBPyConnection = None
 
     @property
-    def connect_args(self) -> Union[tuple, list]:
+    def connect_args(self) -> Iterable:
         """
         duckdb.connect args
         :return:
@@ -50,7 +50,7 @@ class Database(object):
         return self._connect_args
 
     @connect_args.setter
-    def connect_args(self, value: Union[tuple, list]):
+    def connect_args(self, value: Iterable):
         """
         dduckdb.connect args
         :param value:
@@ -59,7 +59,7 @@ class Database(object):
         self._connect_args = value
 
     @property
-    def connect_kwargs(self) -> Union[dict, Dict]:
+    def connect_kwargs(self) -> dict:
         """
         duckdb.connect kwargs
         :return:
@@ -67,7 +67,7 @@ class Database(object):
         return self._connect_kwargs
 
     @connect_kwargs.setter
-    def connect_kwargs(self, value: Union[dict, Dict]):
+    def connect_kwargs(self, value: dict):
         """
         duckdb.connect kwargs
         :param value:
@@ -76,7 +76,7 @@ class Database(object):
         self._connect_kwargs = value
 
     @property
-    def install_extension_list(self) -> list:
+    def install_extension_list(self) -> Iterable:
         """
         duckdb.DuckDBPyConnection install extension list
         :return:
@@ -84,7 +84,7 @@ class Database(object):
         return self._install_extension_list
 
     @install_extension_list.setter
-    def install_extension_list(self, value: list = []):
+    def install_extension_list(self, value: Iterable = []):
         """
         duckdb.DuckDBPyConnection install extension list
         :param value:
@@ -93,7 +93,7 @@ class Database(object):
         self._install_extension_list = value
 
     @property
-    def load_extension_list(self) -> list:
+    def load_extension_list(self) -> Iterable:
         """
         duckdb.DuckDBPyConnection load extension list
         :return:
@@ -101,7 +101,7 @@ class Database(object):
         return self._load_extension_list
 
     @load_extension_list.setter
-    def load_extension_list(self, value: list = []):
+    def load_extension_list(self, value: Iterable = []):
         """
         duckdb.DuckDBPyConnection load extension list
         :param value:
@@ -117,7 +117,7 @@ class Database(object):
         """
         return self._connect
 
-    def open_connect(self, install_extension_list=[], load_extension_list=[]) -> bool:
+    def open_connect(self, install_extension_list: Iterable = [], load_extension_list: Iterable = []) -> bool:
         """
         open duckdb.DuckDBPyConnection
         :param install_extension_list: duckdb.DuckDBPyConnection install extension list

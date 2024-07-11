@@ -12,7 +12,7 @@ Github：https://github.com/guolei19850528/guolei_py3_database
 """
 
 import sqlite3
-from typing import Union
+from typing import Iterable
 
 from addict import Dict
 
@@ -30,8 +30,8 @@ class Database(object):
 
     def __init__(
             self,
-            connect_args: Union[tuple, list] = (),
-            connect_kwargs: Union[dict, Dict] = Dict({}),
+            connect_args: Iterable = (),
+            connect_kwargs: dict = Dict({}),
     ):
         """
         Database construct function
@@ -43,7 +43,7 @@ class Database(object):
         self._connect: sqlite3.Connection = None
 
     @property
-    def connect_args(self) -> Union[tuple, list]:
+    def connect_args(self) -> Iterable:
         """
         sqlite3.connect args
         :return:
@@ -51,7 +51,7 @@ class Database(object):
         return self._connect_args
 
     @connect_args.setter
-    def connect_args(self, value: Union[tuple, list]):
+    def connect_args(self, value: Iterable):
         """
         sqlite3.connect args
         :param value:
@@ -60,7 +60,7 @@ class Database(object):
         self._connect_args = value
 
     @property
-    def connect_kwargs(self) -> Union[dict, Dict]:
+    def connect_kwargs(self) -> dict:
         """
         sqlite3.connect kwargs
         :return:
@@ -68,7 +68,7 @@ class Database(object):
         return self._connect_kwargs
 
     @connect_kwargs.setter
-    def connect_kwargs(self, value: Union[dict, Dict]):
+    def connect_kwargs(self, value: dict):
         """
         sqlite3.connect kwargs
         :param value:

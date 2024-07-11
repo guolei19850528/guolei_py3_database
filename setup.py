@@ -6,7 +6,7 @@ from setuptools import setup
 with open("README.md", "r") as fh:
     long_description = fh.read()
 setup(name="guolei-py3-database",
-      version="0.0.21",
+      version="0.0.22",
       description="a python3 database library by guolei",
       long_description=long_description,
       long_description_content_type="text/markdown",
