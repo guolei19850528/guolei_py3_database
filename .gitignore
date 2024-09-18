@@ -161,4 +161,4 @@ cython_debug/
 .idea
 runtime
 deploy.sh
-
+test*.py
